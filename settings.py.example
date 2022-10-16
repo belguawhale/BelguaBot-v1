@@ -1,0 +1,68 @@
+DISCORD_MAX_MSG_LEN = 2000
+
+WARNING_EXPIRE = 60 * 60 * 24 * 7 # 1 week
+DEFAULT_MUTE = 60 * 60
+
+CURRENCY_ENABLED = ['214769704932343809', '195303131867906049', '195278167181754369',
+                    '214925415440056322', '214737934006484993', '224348770043691009']
+CURRENCY_CHANCE = 0.05
+CURRENCY_NAME = "XP"
+CURRENCY_COOLDOWN = 120
+CURRENCY_TIMEOUT = 20
+CURRENCY_IGNORE_THRESHOLD = 350
+CURRENCY_GETTERS = ['shoot', 'ram', 'snipe', 'swarm', 'destroy', 'annihilate', 'flank', 'outgun', 'kill',
+                    'smash', 'claw', 'pew', 'buff', 'hunt', 'assassinate', 'hack']
+CURRENCY_GETTERS_BAD = ['team', 'spin', 'suicide', 'ragequit', 'get rekt']
+CURRENCY_TIERS = {'swarm of base drones' : -100000000000000000,
+                  'cancerous clan' : -1000000,
+                  'fake diep.io hack' : -100000,
+                  'ragequit' : -23536,
+                  'destroyer bullet' : -15000,
+                  'overlord drone' : -10000,
+                  'booster team' : -5000,
+                  'mini-rammer' : -2000,
+                  'terrible teammate' : -1000,
+                  'stray crasher when you have 1 HP' : -500,
+                  'newly spawned tank' : 0,
+                  'square' : 10,
+                  'small crasher' : 15,
+                  'triangle' : 25,
+                  'large crasher' : 35,
+                  'pentagon' : 130,
+                  'basic tank' : 300,
+                  'green square' : 1000,
+                  'twin' : 1500,
+                  'sniper' : 1750,
+                  'machine gun' : 2000,
+                  'flank guard' : 2250,
+                  'green triangle' : 2500,
+                  'alpha pentagon' : 3000,
+                  'level 30 tank' : 5000,
+                  'green pentagon' : 13000,
+                  'level 45 tank' : 23536,
+                  'fallen booster' : 30000,
+                  'fallen overlord' : 40000,
+                  'guardian' : 50000,
+                  'summoner' : 60000,
+                  'defender' : 70000,
+                  'level 45 tank ' : 80000,
+                  'belunga tank' : 100000,
+                  'green alpha pentagon' : 300000,
+                  'mothership' : 500000,
+                  'arena closer' : 750000,
+                  'BelguaBot' : 1000000}
+
+CURRENCY_TOO_LATE = ["An enemy booster rammed",
+                     "Another tank shot",
+                     "The developer nerfed",
+                     "BelguaBot ate",
+                     "A ranger sniped",
+                     "A necromancer swarmed",
+                     "An overlord's doritos made quick work of",
+                     "A sprayer put a ton of holes in",
+                     "A destroyer destroyed",
+                     "An annihilator annihilated",
+                     "The base drones obliterated",
+                     "The arena closers closed",
+                     "Locktrap roasted",
+                     "MasterOv brainwashed"]
