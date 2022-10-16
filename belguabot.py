@@ -321,7 +321,8 @@ async def cmd_info(message, parameters, recursion=0):
     info += " levels, timed and unavoidable mutes, multi warn/mute/kick/ban, forceban by id, an"
     info += "d probably the coolest feature, aliases.\n\nUse the command `{p}info` to view this"
     info += " message. Use the command `{p}list` to display a listing of all commands. Use the "
-    info += "command `{p}help command` to display help for a command."
+    info += "command `{p}help command` to display help for a command. "
+    info += "My code can be found at https://github.com/belguawhale/BelguaBot-v1!"
     await echo(message, info.format(p=PREFIX))
 
 @cmd('perms', 0, "```\n{0}perms [<command>]\n\nTells you what permission level you have.```")
