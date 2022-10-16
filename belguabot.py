@@ -377,7 +377,7 @@ async def cmd_leaderboard(message, parameters, recursion=0):
         msg += "{}{} {} {}{} {}\n".format(rank, (4 - len(str(rank))) * ' ', data[player], CURRENCY_NAME,
                                           (9 - len(str(data[player]))) * ' ', name)
     msg += '```'
-    await echo(message, msg)
+    await send_multi_message(message, msg, handle_codeblock=True)
 
 @cmd('spawn', 1, "```\n{0}spawn [<channel>]\n\nSpawns something in [<channel>] or the current channel.```")
 async def cmd_spawn(message, parameters, recursion=0):
@@ -477,8 +477,8 @@ async def cmd_alias(message, parameters, recursion=0):
         elif action in ['show', 'remove', '-', 'del', 'delete']:
             await reply(message, "```\n{0}alias {1} <alias name>```".format(PREFIX, action))
         elif action == 'list':
-            await reply(message, "Available aliases: {}".format(', '.join(
-                sorted(a for a in aliases if get_permissions(message.author) >= aliases[a][1]))))
+            await send_multi_message(message, "Available aliases: {}".format(', '.join(
+                sorted(a for a in aliases if get_permissions(message.author) >= aliases[a][1]))), mention_author=True)
         return
     alias = params[1]
     if not alias in aliases and action not in ['add', '+']:
@@ -1197,6 +1197,58 @@ async def reply(message, text, cleanmessage=True):
     if cleanmessage:
         text = text.replace('@', '@\u200b')
     return await client.send_message(message.channel, message.author.mention + ', ' + text)
+
+async def send_multi_message(message: discord.Message, content: str, *, mention_author=False, clean_message=True, handle_codeblock=False):
+    """Sends a message, breaking the message up into multiple messages if necessary.
+    Tries to break at commas (for comma-separated lists) and newlines.
+    Optionally handles codeblocks.""" 
+    if clean_message:
+        content = content.replace('@', '@\u200b')
+    if mention_author:
+        content = message.author.mention + ", " + content
+    return await send_multi_message_helper(message, content, handle_codeblock=handle_codeblock)
+
+async def send_multi_message_helper(message: discord.Message, content: str, *, handle_codeblock=False):
+    """Recursive helper for send_multi_message. If handle_codeblock is set, assumes message ends with three backticks and formats accordingly."""
+    if len(content) <= DISCORD_MAX_MSG_LEN:
+        return await client.send_message(message.channel, content)
+
+    # Content is too large for one message.
+    # Prioritize breaking after a comma or linebreak, then as far as possible.
+    max_amount_to_send = DISCORD_MAX_MSG_LEN - len("\n...\n")
+    if handle_codeblock:
+        max_amount_to_send -= len("```")
+    content_truncated = content[:max_amount_to_send]
+    # The indexes will be the break point in content, *including* the comma or newline
+    try:
+        last_comma_idx = max_amount_to_send - content_truncated[::-1].index(",")
+    except ValueError:
+        last_comma_idx = -1
+    try:
+        last_newline_idx = max_amount_to_send - content_truncated[::-1].index("\n")
+    except ValueError:
+        last_newline_idx = -1
+    break_idx = max(last_comma_idx, last_newline_idx)
+    if break_idx == -1:
+        break_idx = max_amount_to_send
+    
+    should_use_newline = break_idx == last_newline_idx
+    broken_content = content[:break_idx]
+    
+    if should_use_newline:
+        broken_content += "\n..."
+    else:
+        broken_content += " ..."
+    
+    if handle_codeblock:
+        broken_content += "\n```"
+    
+    await client.send_message(message.channel, broken_content)
+
+    remaining_content = content[break_idx:].strip()
+    remaining_content = ("```\n" if handle_codeblock else "") + "..." + ("\n" if should_use_newline else " ") + remaining_content
+
+    return await send_multi_message_helper(message, remaining_content, handle_codeblock=handle_codeblock)
 
 async def log(loglevel, text):
     # loglevels
