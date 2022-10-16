@@ -319,10 +319,11 @@ async def cmd_info(message, parameters, recursion=0):
     info = "BelguaBot is an advanced moderation bot made by belungawhale#4813 using discord.py "
     info += "and Python 3.5.1. Its key features are its unique warning point system, permission"
     info += " levels, timed and unavoidable mutes, multi warn/mute/kick/ban, forceban by id, an"
-    info += "d probably the coolest feature, aliases.\n\nUse the command `{p}info` to view this"
-    info += " message. Use the command `{p}list` to display a listing of all commands. Use the "
+    info += "d probably the coolest feature, aliases.\n"
+    info += "My code can be found at https://github.com/belguawhale/BelguaBot-v1.\n\n"
+    info += "Use the command `{p}info` to view this message. Use the command `{p}list`"
+    info += " to display a listing of all commands. Use the "
     info += "command `{p}help command` to display help for a command. "
-    info += "My code can be found at https://github.com/belguawhale/BelguaBot-v1!"
     await echo(message, info.format(p=PREFIX))
 
 @cmd('perms', 0, "```\n{0}perms [<command>]\n\nTells you what permission level you have.```")
