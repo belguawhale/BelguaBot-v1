@@ -1,0 +1,18 @@
+2018-1-1/
+__pycache__
+
+# Config
+config.py
+settings.py
+
+# Data
+aliases.json
+aliases-old.json
+data.json
+ignore.json
+mutes.json
+warnings.json
+
+# Logging
+console.out
+log.txt
